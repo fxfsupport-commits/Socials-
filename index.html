@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Connect With Us - FXF Official</title>
-  <meta name="description" content="Responsive clean dark webpage featuring 3D glossy jelly social media buttons with infinite ambient red glow, picture logo, anchor links, and single-file HTML/CSS/JS export." />
+  <meta name="description" content="Responsive clean dark webpage featuring 3D glossy social media buttons shaped identically to the FXF brand logo with infinite ambient red glow, picture logo, anchor links, and single-file HTML/CSS/JS." />
   <meta property="og:title" content="Connect With Us - FXF Official" />
-  <meta property="og:description" content="Responsive clean dark webpage featuring 3D glossy jelly social media buttons with infinite ambient red glow, picture logo, anchor links, and single-file HTML/CSS/JS export." />
+  <meta property="og:description" content="Responsive clean dark webpage featuring 3D glossy social media buttons shaped identically to the FXF brand logo with infinite ambient red glow, picture logo, anchor links, and single-file HTML/CSS/JS." />
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
 
@@ -26,6 +26,8 @@
       --glow-ruby: #be123c;
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
+      /* Same squircle curvature proportion as the logo on top (24px on 88px logo -> ~27.2%) */
+      --icon-radius: 28px;
     }
 
     body {
@@ -65,7 +67,7 @@
       pointer-events: none;
     }
 
-    /* Glowing orbs moving in a continuous figure-8 infinity path */
+    /* Glowing orbs moving in a continuous infinity path */
     .glow-orb {
       position: absolute;
       border-radius: 50%;
@@ -166,6 +168,7 @@
       gap: 1.25rem;
     }
 
+    /* Master Logo Container: rounded squircle with 3px gradient rim */
     .logo-container {
       position: relative;
       width: 88px;
@@ -215,7 +218,8 @@
     }
 
     /* ==========================================================================
-       3D GLOSSY JELLY BUTTONS GRID
+       3D GLOSSY SOCIAL MEDIA BUTTONS GRID
+       SHAPED EXACTLY LIKE THE LOGO CONTAINER ON TOP
        ========================================================================== */
     .buttons-container {
       width: 100%;
@@ -227,7 +231,7 @@
       padding: 1rem 0;
     }
 
-    .jelly-link {
+    .social-link {
       display: inline-block;
       text-decoration: none;
       position: relative;
@@ -238,77 +242,91 @@
       transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .jelly-link:focus-visible .jelly-btn {
+    .social-link:focus-visible .social-btn {
       outline: 2px solid #ffffff;
       outline-offset: 6px;
     }
 
-    .jelly-btn {
+    /* Outer shape matches the logo container exactly: rounded squircle with 3px gradient border */
+    .social-btn {
       position: relative;
       width: 106px;
       height: 106px;
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 40% 60% 65% 35% / 55% 45% 55% 45%;
+      /* IDENTICAL SHAPE TO THE LOGO: 28px squircle matching the logo's 24px/88px ratio */
+      border-radius: var(--icon-radius);
+      padding: 3px;
       transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       user-select: none;
       overflow: hidden;
       will-change: transform, box-shadow;
     }
 
-    .jelly-link:hover .jelly-btn {
-      transform: translateY(-8px) scale(1.08) rotate(-2deg);
+    .social-link:hover .social-btn {
+      transform: translateY(-8px) scale(1.08) rotate(-1.5deg);
     }
 
-    .jelly-link:active .jelly-btn {
+    .social-link:active .social-btn {
       transform: translateY(2px) scale(0.96);
     }
 
-    /* Top-Left Gloss Specular Dome */
-    .jelly-btn::before {
+    /* Top-Center 3D Gloss Specular Dome conforming to the squircle shape */
+    .social-btn::before {
       content: "";
       position: absolute;
-      top: 8%;
-      left: 14%;
-      width: 52%;
+      top: 4px;
+      left: 10px;
+      right: 10px;
       height: 44%;
-      border-radius: 50% 50% 45% 55% / 60% 60% 40% 40%;
-      background: radial-gradient(ellipse at 42% 35%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.45) 35%, transparent 70%);
+      border-radius: calc(var(--icon-radius) - 6px) calc(var(--icon-radius) - 6px) 45% 45%;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0.25) 45%, transparent 100%);
       pointer-events: none;
       z-index: 3;
-      transform: rotate(-18deg);
     }
 
-    /* Bottom Caustic & Rim Glow */
-    .jelly-btn::after {
+    /* Bottom subtle internal glass reflection */
+    .social-btn::after {
       content: "";
       position: absolute;
-      bottom: 6%;
-      right: 12%;
-      width: 60%;
-      height: 38%;
-      border-radius: 50%;
-      background: radial-gradient(ellipse at 55% 65%, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.08) 45%, transparent 70%);
+      bottom: 5px;
+      left: 14px;
+      right: 14px;
+      height: 30%;
+      border-radius: 40% 40% calc(var(--icon-radius) - 6px) calc(var(--icon-radius) - 6px);
+      background: radial-gradient(ellipse at center bottom, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.05) 60%, transparent 80%);
       pointer-events: none;
       z-index: 2;
     }
 
+    /* Inner button surface conforming to the squircle */
+    .social-btn-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: calc(var(--icon-radius) - 3px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+
     /* SVG Icon inside button */
-    .jelly-icon {
+    .social-icon {
       width: 44px;
       height: 44px;
       fill: #ffffff;
       position: relative;
       z-index: 4;
-      filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.35));
+      filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.4));
       transition: transform 0.35s ease;
     }
 
     /* Picture / Image Icon inside button (FXF Support) */
-    .jelly-img-icon {
-      width: 50px;
-      height: 50px;
+    .social-img-icon {
+      width: 48px;
+      height: 48px;
       object-fit: contain;
       border-radius: 12px;
       position: relative;
@@ -317,42 +335,48 @@
       transition: transform 0.35s ease;
     }
 
-    .jelly-link:hover .jelly-icon,
-    .jelly-link:hover .jelly-img-icon {
+    .social-link:hover .social-icon,
+    .social-link:hover .social-img-icon {
       transform: scale(1.12);
     }
 
     /* ==========================================================================
-       THE 5 BUTTON THEMES
+       THE 5 BUTTON COLOR THEMES
        ========================================================================== */
 
-    /* 1. TikTok */
+    /* 1. TikTok: Obsidian black with Cyan & Neon Crimson Glow */
     .btn-tiktok {
-      background: radial-gradient(circle at 35% 30%, #202028 0%, #111116 55%, #050508 100%);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(37, 244, 238, 0.6) 40%, rgba(254, 44, 85, 0.7) 100%);
       box-shadow: 
         0 14px 30px -4px rgba(254, 44, 85, 0.55),
         0 6px 18px rgba(37, 244, 238, 0.4),
-        inset 0 3px 5px rgba(255, 255, 255, 0.65),
-        inset 0 -8px 12px rgba(0, 0, 0, 0.8);
+        inset 0 2px 4px rgba(255, 255, 255, 0.6),
+        inset 0 -6px 12px rgba(0, 0, 0, 0.85);
     }
-    .jelly-link:hover .btn-tiktok {
+    .btn-tiktok .social-btn-inner {
+      background: radial-gradient(circle at 35% 30%, #202028 0%, #111116 55%, #050508 100%);
+    }
+    .social-link:hover .btn-tiktok {
       box-shadow: 
         0 22px 42px -4px rgba(254, 44, 85, 0.8),
-        0 8px 22px rgba(37, 244, 238, 0.6),
+        0 8px 22px rgba(37, 244, 238, 0.65),
         inset 0 3px 6px rgba(255, 255, 255, 0.9),
-        inset 0 -8px 14px rgba(0, 0, 0, 0.9);
+        inset 0 -8px 14px rgba(0, 0, 0, 0.95);
     }
 
-    /* 2. Instagram */
+    /* 2. Instagram: Amber-Pink-Crimson-Purple Radiant Gradient */
     .btn-instagram {
-      background: radial-gradient(circle at 25% 25%, #ffb703 0%, #ff007f 45%, #9d0208 75%, #5a189a 100%);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, #ff007f 50%, #5a189a 100%);
       box-shadow: 
         0 14px 30px -4px rgba(225, 29, 72, 0.65),
         0 6px 16px rgba(0, 0, 0, 0.6),
-        inset 0 3px 5px rgba(255, 255, 255, 0.6),
-        inset 0 -8px 12px rgba(0, 0, 0, 0.4);
+        inset 0 2px 4px rgba(255, 255, 255, 0.6),
+        inset 0 -6px 12px rgba(0, 0, 0, 0.4);
     }
-    .jelly-link:hover .btn-instagram {
+    .btn-instagram .social-btn-inner {
+      background: radial-gradient(circle at 25% 25%, #ffb703 0%, #ff007f 45%, #9d0208 75%, #5a189a 100%);
+    }
+    .social-link:hover .btn-instagram {
       box-shadow: 
         0 22px 42px -4px rgba(225, 29, 72, 0.85),
         0 8px 20px rgba(0, 0, 0, 0.7),
@@ -360,16 +384,19 @@
         inset 0 -8px 14px rgba(0, 0, 0, 0.45);
     }
 
-    /* 3. YouTube */
+    /* 3. YouTube: Crimson / Ruby Radiant Theme */
     .btn-youtube {
-      background: radial-gradient(circle at 35% 30%, #ff2a4d 0%, #d90429 55%, #7a0014 100%);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, #ff2a4d 50%, #7a0014 100%);
       box-shadow: 
         0 14px 30px -4px rgba(217, 4, 41, 0.65),
         0 6px 16px rgba(0, 0, 0, 0.6),
-        inset 0 3px 5px rgba(255, 255, 255, 0.6),
-        inset 0 -8px 12px rgba(0, 0, 0, 0.4);
+        inset 0 2px 4px rgba(255, 255, 255, 0.6),
+        inset 0 -6px 12px rgba(0, 0, 0, 0.4);
     }
-    .jelly-link:hover .btn-youtube {
+    .btn-youtube .social-btn-inner {
+      background: radial-gradient(circle at 35% 30%, #ff2a4d 0%, #d90429 55%, #7a0014 100%);
+    }
+    .social-link:hover .btn-youtube {
       box-shadow: 
         0 22px 42px -4px rgba(217, 4, 41, 0.85),
         0 8px 20px rgba(0, 0, 0, 0.7),
@@ -377,16 +404,19 @@
         inset 0 -8px 14px rgba(0, 0, 0, 0.45);
     }
 
-    /* 4. Telegram */
+    /* 4. Telegram: Electric Azure / Sky Blue Radiant Theme */
     .btn-telegram {
-      background: radial-gradient(circle at 35% 30%, #38bdf8 0%, #0088cc 55%, #004b73 100%);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.45) 0%, #38bdf8 50%, #004b73 100%);
       box-shadow: 
         0 14px 30px -4px rgba(0, 136, 204, 0.65),
         0 6px 16px rgba(0, 0, 0, 0.6),
-        inset 0 3px 5px rgba(255, 255, 255, 0.6),
-        inset 0 -8px 12px rgba(0, 0, 0, 0.4);
+        inset 0 2px 4px rgba(255, 255, 255, 0.6),
+        inset 0 -6px 12px rgba(0, 0, 0, 0.4);
     }
-    .jelly-link:hover .btn-telegram {
+    .btn-telegram .social-btn-inner {
+      background: radial-gradient(circle at 35% 30%, #38bdf8 0%, #0088cc 55%, #004b73 100%);
+    }
+    .social-link:hover .btn-telegram {
       box-shadow: 
         0 22px 42px -4px rgba(0, 136, 204, 0.85),
         0 8px 20px rgba(0, 0, 0, 0.7),
@@ -394,25 +424,26 @@
         inset 0 -8px 14px rgba(0, 0, 0, 0.45);
     }
 
-    /* 5. FXF Support: Black and Glowing Red Theme */
+    /* 5. FXF Support: Black & Glowing Red Theme (Mirroring Master Logo) */
     .btn-fxf-support {
-      background: radial-gradient(circle at 35% 30%, #2a080e 0%, #140204 45%, #020203 100%);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.35) 0%, rgba(225, 29, 72, 0.8) 50%, rgba(0, 0, 0, 0.9) 100%);
       box-shadow: 
         0 16px 36px -4px rgba(225, 29, 72, 0.85),
         0 0 24px rgba(244, 63, 94, 0.4),
         0 6px 16px rgba(0, 0, 0, 0.9),
-        inset 0 3px 6px rgba(255, 255, 255, 0.7),
+        inset 0 2px 5px rgba(255, 255, 255, 0.7),
         inset 0 -8px 14px rgba(225, 29, 72, 0.5);
-      border: 1px solid rgba(225, 29, 72, 0.4);
     }
-    .jelly-link:hover .btn-fxf-support {
+    .btn-fxf-support .social-btn-inner {
+      background: radial-gradient(circle at 35% 30%, #2a080e 0%, #140204 45%, #020203 100%);
+    }
+    .social-link:hover .btn-fxf-support {
       box-shadow: 
         0 24px 48px -4px rgba(225, 29, 72, 1),
         0 0 32px rgba(244, 63, 94, 0.65),
         0 8px 24px rgba(0, 0, 0, 0.95),
         inset 0 3px 8px rgba(255, 255, 255, 0.9),
         inset 0 -8px 16px rgba(225, 29, 72, 0.7);
-      border-color: rgba(244, 63, 94, 0.7);
     }
 
     .link-caption {
@@ -426,7 +457,7 @@
       transition: all 0.3s ease;
     }
 
-    .jelly-link:hover .link-caption {
+    .social-link:hover .link-caption {
       opacity: 1;
       color: #ffffff;
       transform: translateY(-2px);
@@ -436,37 +467,9 @@
       color: #fca5a5;
       text-shadow: 0 0 10px rgba(225, 29, 72, 0.5);
     }
-    .jelly-link:hover .caption-fxf {
+    .social-link:hover .caption-fxf {
       color: #ffffff;
       text-shadow: 0 0 14px rgba(244, 63, 94, 0.8);
-    }
-
-    /* Direct Copy Toolbar */
-    .top-actions {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 1rem;
-    }
-
-    .btn-action {
-      background: rgba(225, 29, 72, 0.2);
-      color: #fff;
-      border: 1px solid rgba(225, 29, 72, 0.4);
-      padding: 8px 16px;
-      border-radius: 8px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      transition: all 0.2s ease;
-    }
-
-    .btn-action:hover {
-      background: rgba(225, 29, 72, 0.4);
-      border-color: rgba(244, 63, 94, 0.7);
-      transform: translateY(-1px);
     }
 
     .footer-section {
@@ -479,24 +482,29 @@
     }
 
     /* ==========================================================================
-       RESPONSIVENESS
+       RESPONSIVENESS & MOBILE-FRIENDLY TWEAKS
        ========================================================================== */
     @media (max-width: 768px) {
       body { padding: 2rem 1rem; }
+      :root { --icon-radius: 24px; }
       .page-wrapper { gap: 2.75rem; }
       .buttons-container { gap: 1.5rem 1.25rem; }
-      .jelly-btn { width: 90px; height: 90px; }
-      .jelly-icon { width: 38px; height: 38px; }
-      .jelly-img-icon { width: 42px; height: 42px; }
-      .logo-container { width: 76px; height: 76px; }
+      .social-btn { width: 90px; height: 90px; }
+      .social-icon { width: 38px; height: 38px; }
+      .social-img-icon { width: 42px; height: 42px; }
+      .logo-container { width: 76px; height: 76px; border-radius: 20px; }
+      .logo-image { border-radius: 17px; }
     }
 
     @media (max-width: 480px) {
+      :root { --icon-radius: 20px; }
       .buttons-container { gap: 1.25rem 1rem; }
-      .jelly-btn { width: 80px; height: 80px; }
-      .jelly-icon { width: 32px; height: 32px; }
-      .jelly-img-icon { width: 36px; height: 36px; }
+      .social-btn { width: 80px; height: 80px; padding: 2.5px; }
+      .social-icon { width: 32px; height: 32px; }
+      .social-img-icon { width: 36px; height: 36px; }
       .link-caption { font-size: 0.75rem; }
+      .logo-container { width: 68px; height: 68px; border-radius: 18px; }
+      .logo-image { border-radius: 15px; }
     }
   </style>
 </head>
@@ -514,9 +522,10 @@
     <!-- TOP SECTION: LOGO (PICTURE) & TITLE -->
     <header class="header-section">
       <div class="logo-container">
-        <!-- Picture element for responsive image loading with SVG fallback -->
+        <!-- Picture element with responsive sources and fallback -->
         <picture>
           <source srcset="./images/fxf.jpg" type="image/jpeg">
+          <source srcset="/images/fxf.svg" type="image/svg+xml">
           <img 
             src="./images/fxf.jpg" 
             alt="Brand Emblem Logo" 
@@ -531,61 +540,72 @@
     </header>
 
     <!-- 5 ICONS: TIKTOK, INSTAGRAM, YOUTUBE, TELEGRAM, FXF SUPPORT -->
+    <!-- SHAPED AS THE EXACT SAME SQUIRCLE EMBLEM AS THE LOGO ON TOP -->
     <nav class="buttons-container" aria-label="Social media links">
 
       <!-- 1. TikTok Anchor -->
-      <a href="https://www.tiktok.com/@__f_x_f__?is_from_webapp=1&sender_device=pc" target="_blank" rel="noopener noreferrer" class="jelly-link" aria-label="TikTok">
-        <div class="jelly-btn btn-tiktok">
-          <svg class="jelly-icon" viewBox="0 0 24 24">
-            <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.04-.1z"/>
-          </svg>
+      <a href="https://www.tiktok.com/@__f_x_f__?is_from_webapp=1&sender_device=pc" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="TikTok">
+        <div class="social-btn btn-tiktok">
+          <div class="social-btn-inner">
+            <svg class="social-icon" viewBox="0 0 24 24">
+              <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.04-.1z"/>
+            </svg>
+          </div>
         </div>
         <div class="link-caption">TikTok</div>
       </a>
 
       <!-- 2. Instagram Anchor -->
-      <a href="https://www.instagram.com/fxf__community?utm_source=ig_web_button_share_sheet&xtok=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" class="jelly-link" aria-label="Instagram">
-        <div class="jelly-btn btn-instagram">
-          <svg class="jelly-icon" viewBox="0 0 24 24">
-            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-          </svg>
+      <a href="https://www.instagram.com/fxf__community?utm_source=ig_web_button_share_sheet&xtok=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
+        <div class="social-btn btn-instagram">
+          <div class="social-btn-inner">
+            <svg class="social-icon" viewBox="0 0 24 24">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+          </div>
         </div>
         <div class="link-caption">Instagram</div>
       </a>
 
       <!-- 3. YouTube Anchor -->
-      <a href="https://www.youtube.com/channel/UCOABqMh6N3HPbsolMpETgVw" target="_blank" rel="noopener noreferrer" class="jelly-link" aria-label="YouTube">
-        <div class="jelly-btn btn-youtube">
-          <svg class="jelly-icon" viewBox="0 0 24 24">
-            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-          </svg>
+      <a href="https://www.youtube.com/channel/UCOABqMh6N3HPbsolMpETgVw" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="YouTube">
+        <div class="social-btn btn-youtube">
+          <div class="social-btn-inner">
+            <svg class="social-icon" viewBox="0 0 24 24">
+              <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+            </svg>
+          </div>
         </div>
         <div class="link-caption">YouTube</div>
       </a>
 
       <!-- 4. Telegram Anchor -->
-      <a href="https://t.me/+bI27yLgyfms3ODE0" target="_blank" rel="noopener noreferrer" class="jelly-link" aria-label="Telegram">
-        <div class="jelly-btn btn-telegram">
-          <svg class="jelly-icon" viewBox="0 0 24 24">
-            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.121l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.458c.538-.196 1.006.128.832.941z"/>
-          </svg>
+      <a href="https://t.me/+bI27yLgyfms3ODE0" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Telegram">
+        <div class="social-btn btn-telegram">
+          <div class="social-btn-inner">
+            <svg class="social-icon" viewBox="0 0 24 24">
+              <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.121l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.458c.538-.196 1.006.128.832.941z"/>
+            </svg>
+          </div>
         </div>
         <div class="link-caption">Telegram</div>
       </a>
 
-      <!-- 5. FXF Support Anchor (Black & Glow Red Theme with Image Icon) -->
-      <a href="https://t.me/Fxfsupport1" target="_blank" rel="noopener noreferrer" class="jelly-link" aria-label="FXF Support">
-        <div class="jelly-btn btn-fxf-support">
-          <!-- Picture / Image Icon as requested -->
-          <picture>
-            <source srcset="/images/fxf trans.png" type="image/jpeg">
-            <img 
-              src="/images/fxf trans.png" 
-              alt="FXF Support Icon" 
-              class="jelly-img-icon" 
-              onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'%23f43f5e\'><polygon points=\'50,15 85,35 85,75 50,95 15,75 15,35\' fill=\'%23000\' stroke=\'%23f43f5e\' stroke-width=\'6\'/><text x=\'50\' y=\'62\' font-family=\'sans-serif\' font-size=\'32\' font-weight=\'bold\' fill=\'%23fff\' text-anchor=\'middle\'>FXF</text></svg>';"
-            />
-          </picture>
+      <!-- 5. FXF Support Anchor (Black & Glow Red Theme with Squircle Shaped Icon) -->
+      <a href="https://t.me/Fxfsupport1" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="FXF Support">
+        <div class="social-btn btn-fxf-support">
+          <div class="social-btn-inner">
+            <picture>
+              <source srcset="/images/fxf trans.png" type="image/svg+xml">
+              <source srcset="/images/fxf trans.png" type="image/png">
+              <img 
+                src="/images/fxf trans.png" 
+                alt="FXF Support Icon" 
+                class="social-img-icon" 
+                onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'%23f43f5e\'><polygon points=\'50,15 85,35 85,75 50,95 15,75 15,35\' fill=\'%23000\' stroke=\'%23f43f5e\' stroke-width=\'6\'/><text x=\'50\' y=\'62\' font-family=\'sans-serif\' font-size=\'32\' font-weight=\'bold\' fill=\'%23fff\' text-anchor=\'middle\'>FXF</text></svg>';"
+              />
+            </picture>
+          </div>
         </div>
         <div class="link-caption caption-fxf">FXF Support</div>
       </a>
@@ -602,18 +622,18 @@
   <!-- JAVASCRIPT: 3D PERSPECTIVE TILT TRACKING -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const links = document.querySelectorAll('.jelly-link');
+      const links = document.querySelectorAll('.social-link');
 
       links.forEach(link => {
-        const btn = link.querySelector('.jelly-btn');
+        const btn = link.querySelector('.social-btn');
 
         link.addEventListener('mousemove', (e) => {
           const rect = link.getBoundingClientRect();
           const x = e.clientX - rect.left - rect.width / 2;
           const y = e.clientY - rect.top - rect.height / 2;
 
-          const rotateX = (-y / rect.height) * 22;
-          const rotateY = (x / rect.width) * 22;
+          const rotateX = (-y / rect.height) * 20;
+          const rotateY = (x / rect.width) * 20;
 
           btn.style.transform = `translateY(-8px) scale(1.08) perspective(600px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
         });
